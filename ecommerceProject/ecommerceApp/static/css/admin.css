@@ -1,0 +1,12 @@
+#container{
+    display: flex;
+    align-content: space-between;
+}
+
+#products{
+    flex: 45%;
+}
+
+#orders{
+    flex: 45%;
+}

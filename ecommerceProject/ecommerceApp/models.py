@@ -105,14 +105,15 @@ class Order_item(models.Model):
 class AdminManager(models.Manager):
     def admin_validator(self, postData):
         errors = {}
-        user_list_to_login = User.objects.filter(email=postData['login_email'])
-        if len(user_list_to_login) == 0:
+        admin_list_to_login = self.filter(email=postData['login_email'])
+        if len(admin_list_to_login) == 0:
             errors['login_email'] = "There was a problem email"
         else:
-            if not bcrypt.checkpw(postData['login_password'].encode(), user_list_to_login[0].password.encode()):
+            if not bcrypt.checkpw(postData['login_password'].encode(), admin_list_to_login[0].password.encode()):
                 erroes['login_password'] = "There was a problem password"
         
         return errors
+
 
 class Admin(models.Model):
     email =  models.CharField(max_length=255)

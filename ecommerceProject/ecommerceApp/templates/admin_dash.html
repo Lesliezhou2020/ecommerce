@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div id=header>
+        <h1>Operating Admin [{{ request.session.admin_email }}]</h1>
+        <div id="user_panel">
+            <a href="/admin/logout">Logout</a>
+        </div>
+    </div>
+    <div id="container">
+        <div id="products">
+            <h2>Add new Product</h2>
+            <form action="/product/add" method="post">
+                {% csrf_token %}
+                <label>Product Name</label><input name="product_name">
+                <label>Price</label><input name="price" type="number" step="any">
+                <br>
+                <label>Image Link(front)</label><input name="front_url"><br>
+                <label>Image Link(back)</label><input name="back_url"><br>
+                <button>Add new Product</button>
+            </form>
+
+            <h2>Product Overview</h2>
+            <table></table>
+        </div>
+        <div id="orders">
+            <h2>Pending Orders</h2>
+            <table>
+                <tr>
+                    <th>Order Number</th>
+                    <th>Customer Name</th>
+                    <th>Order Placed Time</th>
+                    <th>Total Amount</th>
+                    <th>Order Status</th>
+                    <th>Options</th>
+                </tr>
+
+            </table>
+            <h2>Order History</h2>
+            <table>
+                <tr>
+                    <th>Order Number</th>
+                    <th>Customer Name</th>
+                    <th>Order Placed Time</th>
+                    <th>Total Amount</th>
+                    <th>Order Status</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
