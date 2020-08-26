@@ -44,4 +44,21 @@ def admin_dash(request):
     if 'admin_email' not in request.session:
         return redirect('/admin')
 
-    return render(request, 'admin_dash.html')
+    context = {
+        'all_products': Item.objects.all(),
+    }
+
+    return render(request, 'admin_dash.html', context)
+
+def add_product(request):
+    if request.method == 'POST':
+        Item.objects.create(
+            category = request.POST['category'],
+            name = request.POST['product_name'],
+            price = request.POST['price'],
+            front_pic = request.POST['front_pic'],
+            back_pic = request.POST['back_pic'],
+            desc = request.POST['desc']
+        )
+
+    return redirect('/admin/dashboard')

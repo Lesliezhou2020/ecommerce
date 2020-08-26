@@ -84,10 +84,10 @@ class Order(models.Model):
 
 class Item(models.Model):
     category = models.CharField(max_length=255)
-    Name = models.CharField(max_length=255)
-    Desc = models.TextField()
-    Front_pic = models.URLField(max_length=200)
-    Back_pic =  models.URLField(max_length=200)
+    name = models.CharField(max_length=255)
+    desc = models.TextField()
+    front_pic = models.URLField(max_length=200)
+    back_pic =  models.URLField(max_length=200)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
