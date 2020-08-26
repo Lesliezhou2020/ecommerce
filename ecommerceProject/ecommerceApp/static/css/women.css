@@ -1,0 +1,21 @@
+#container{
+    display: flex;
+    align-content: space-between;
+}
+
+#navigation{
+    width: 260px;
+    flex-shrink: 1;
+}
+
+.items {
+    width: 200px;
+    height: 400px;
+    background-color: aqua;
+    display: inline-block;
+    align-content: center;
+}
+
+.display_img {
+    width: 90%;
+}

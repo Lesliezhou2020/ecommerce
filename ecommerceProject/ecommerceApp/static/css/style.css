@@ -1,0 +1,20 @@
+body { 
+	max-width: 1080px; 
+	margin: 0 auto !important; 
+	float: none !important; 
+}
+
+#header {
+    display: flex;
+    align-content: space-between;
+}
+
+h1 {
+    flex: 50%;
+}
+
+#user_panel {
+    flex-flow: column;
+    margin: 30px;
+    vertical-align: middle;
+}
