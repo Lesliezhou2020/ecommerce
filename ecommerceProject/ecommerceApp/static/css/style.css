@@ -18,3 +18,8 @@ h1 {
     margin: 30px;
     vertical-align: middle;
 }
+
+#cart_item_count {
+    color: red;
+    font: bold;
+}

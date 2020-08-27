@@ -4,7 +4,17 @@ from django.contrib import messages
 from ecommerceApp.models import *
 
 def index(request):
-    return render(request, 'index.html')
+    context = {}
+    if 'user_id' in request.session:
+        context['user'] = User.objects.get(id=request.session['user_id'])
+
+    if 'cart' in request.session:
+        context['cart_item_count'] = sum(request.session['cart'].values())
+    else:
+        context['cart_item_count'] = 0
+
+    return render(request, 'index.html', context)
+
 
 def men(request):
     return render(request, 'men.html')
@@ -13,6 +23,15 @@ def women(request):
     context = {
         'all_products': Item.objects.all().exclude(category="men"),
     }
+
+    if 'user_id' in request.session:
+        context['user'] = User.objects.get(id=request.session['user_id'])
+
+    if 'cart' in request.session:
+        context['cart_item_count'] = sum(request.session['cart'].values())
+    else:
+        context['cart_item_count'] = 0
+
     return render(request, 'women.html',context)
 
 
@@ -54,6 +73,7 @@ def admin_dash(request):
 
     return render(request, 'admin_dash.html', context)
 
+
 def add_product(request):
     if request.method == 'POST':
         Item.objects.create(
@@ -67,14 +87,15 @@ def add_product(request):
 
     return redirect('/admin/dashboard')
 
+
 def carts(request):
    
     if 'user_id' not in request.session:
         return redirect('/')
+
     context = {
         'user': User.objects.get(id=request.session["user_id"])
     }
-
     return render(request, 'carts.html', context)
 
 

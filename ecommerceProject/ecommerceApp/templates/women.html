@@ -13,7 +13,14 @@
     <div id="header">
         <h1></h1>
         <div id="user_panel">
-            <a href="/login">Login/Registration</a>
+            {% if "user_id" in request.session %}
+                <span>Hello <b>{{ user.first_name }}!</b></span>
+                <a href='/logout'>Logout</a> |
+            {% else %}
+                <a href="/register">Login/Registration</a> |
+            {% endif %}
+
+            <a href='/carts'>Shopping Cart</a>(<red id='cart_item_count'>{{cart_item_count}}</red>)
         </div>
     </div>
     <div id="main">
