@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.http import JsonResponse
 from django.contrib import messages
 from ecommerceApp.models import *
 
@@ -9,7 +10,10 @@ def men(request):
     return render(request, 'men.html')
 
 def women(request):
-    return render(request, 'women.html')
+    context = {
+        'all_products': Item.objects.all().exclude(category="men"),
+    }
+    return render(request, 'women.html',context)
 
 
 def admin(request):
@@ -112,3 +116,13 @@ def login(request):
 def logout(request):
     request.session.flush()
     return redirect('/')
+
+def details(request, product_id):
+    item = Item.objects.get(id=product_id)
+    return JsonResponse(
+        {
+            "name": item.name, 
+            "price": item.price, 
+            "desc": item.desc,
+            "image":item.front_pic
+        })

@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/women.css' %}">
     <title>Women</title>
+    <script src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
     <div id="header">
@@ -26,32 +27,28 @@
                     <li><a href="#">Bags</a></li>
                 </ul>
             </div>
-            <div id="main_content">
+            <section >
+                {% for product in all_products %}
                 <div class='items'>
-                    <img class="display_img" src="../static/pictures/shoes1a.png" alt-src="../static/pictures/shoes1b.png">
+                    <img class="display_img" src="../static/pictures/{{ product.front_pic }}" alt-src="../static/pictures/{{ product.back_pic}}" product_id="{{ product.id }}">
+                    <p>{{ product.name }}</p>
+                    <select name="counts">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <button type="submit">Add</button>                 
                 </div>
-                <div class='items'>
-                    <img class="display_img" src="../static/pictures/shoes2a.png" alt-src="../static/pictures/shoes2b.png">
-                </div>
-                <div class='items'>
-                    <img class="display_img" src="../static/pictures/shoes3a.png" alt-src="../static/pictures/shoes3b.png">
-                </div>
-                <div class='items'>
-                    <img class="display_img" src="../static/pictures/shoes4a.png" alt-src="../static/pictures/shoes4b.png">
-                </div>
-                <div class='items'>
-                    <img class="display_img" src="../static/pictures/shoes5a.png" alt-src="../static/pictures/shoes5b.png">
-                </div>
-                <div class='items'>
-                    <img class="display_img" src="../static/pictures/shoes6a.png" alt-src="../static/pictures/shoes6b.png">
-                </div>
-                <div class='items'>
-                    <img class="display_img" src="../static/pictures/shoes7a.png" alt-src="../static/pictures/shoes7b.png">
-                </div>
-                <div class='items'>
-                    <img class="display_img" src="../static/pictures/shoes8a.png" alt-src="../static/pictures/shoes8b.png">
-                </div>
-            </div>
+                {% endfor %}
+                
+            </section>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
         </div>
     </div>
 </body>
