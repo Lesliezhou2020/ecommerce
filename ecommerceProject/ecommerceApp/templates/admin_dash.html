@@ -39,21 +39,25 @@
             </form>
 
             <h2>Product Overview</h2>
-            <table>
-                <tr>
-                    <th>Product ID</th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Image</th>                
-                </tr>
-                {% for product in all_products %}
-                <tr>
-                    <td>{{ product.id }}</td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.price }}</td>
-                    <td><img class="pictures" src="../static/pictures/{{ product.front_pic }}"></td>
-                </tr>
-                {% endfor %}
+            <table id="box">
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Image</th>                
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in all_products %}
+                    <tr>
+                        <td>{{ product.id }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price }}</td>
+                        <td><img class="pictures" src="../static/pictures/{{ product.front_pic }}"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
         <div id="orders">
