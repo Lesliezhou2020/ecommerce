@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Shopping Cart</title>
 </head>
 <body>
+    <div id="header">
+        <h1></h1>
+        <div id="user_panel">
+            {% if "user_id" in request.session %}
+                <span>Hello <b>{{ user.first_name }}!</b></span>
+                <a href='/logout'>Logout</a> |
+            {% else %}
+                <a href="/register">Login/Registration</a> |
+            {% endif %}
+
+            <a href='/carts'>Shopping Cart</a>(<red id='cart_item_count'>{{cart_item_count}}</red>)
+        </div>
+    </div>
+
     <h1>Welcome, here is your order:</h1>
     <table id="top_part">
         <thead>
@@ -28,10 +44,11 @@
             </tr>
             {% endfor %}
         </tbody>
-    <h1>Shipping Information</h1>
     </table>
     <p>Total Price</p>
     <a href="/women">Continue Shopping</a>
+
+    <h1>Shipping Information</h1>
     <form action="/shipping" method="post">
         {% csrf_token %}
         <table>
@@ -54,10 +71,6 @@
             <tr>
                 <td>State</td>
                 <td><input type="text" name="state"></td>
-            </tr>
-            <tr>
-                <td>City</td>
-                <td><input type="text" name="city"></td>
             </tr>
             <tr>
                 <td>Zipcode</td>
@@ -90,10 +103,6 @@
                 <td><input type="text" name="state"></td>
             </tr>
             <tr>
-                <td>City</td>
-                <td><input type="text" name="city"></td>
-            </tr>
-            <tr>
                 <td>Zipcode</td>
                 <td><input type="text" name="zipcode"></td>
             </tr>
@@ -112,9 +121,5 @@
 
         </table>
     </form>
-
-
-
-    
 </body>
 </html>

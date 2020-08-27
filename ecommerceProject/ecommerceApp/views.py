@@ -96,6 +96,12 @@ def carts(request):
     context = {
         'user': User.objects.get(id=request.session["user_id"])
     }
+
+    if 'cart' in request.session:
+        context['cart_item_count'] = sum(request.session['cart'].values())
+    else:
+        context['cart_item_count'] = 0
+
     return render(request, 'carts.html', context)
 
 
@@ -141,9 +147,26 @@ def logout(request):
 def details(request, product_id):
     item = Item.objects.get(id=product_id)
     return JsonResponse(
-        {
-            "name": item.name, 
-            "price": item.price, 
-            "desc": item.desc,
-            "image":item.front_pic
-        })
+    {
+        "name": item.name, 
+        "price": item.price, 
+        "desc": item.desc,
+        "image":item.front_pic
+    })
+
+
+def add_item(request, product_id, amount):
+    if 'cart' not in request.session:
+        request.session['cart'] = {}
+
+    if product_id in request.session['cart']:
+        request.session['cart'][product_id] += amount
+    else:
+        request.session['cart'][product_id] = amount
+
+    request.session.modified = True
+
+    return JsonResponse(
+    {
+        'items_in_cart': sum(request.session['cart'].values()),
+    })

@@ -20,7 +20,7 @@
                 <a href="/register">Login/Registration</a> |
             {% endif %}
 
-            <a href='/carts'>Shopping Cart</a>(<red id='cart_item_count'>{{cart_item_count}}</red>)
+            <a href='/carts'>Shopping Cart</a>(<span id='cart_item_count'>{{cart_item_count}}</span>)
         </div>
     </div>
     <div id="main">
@@ -39,14 +39,14 @@
                 <div class='items'>
                     <img class="display_img" src="../static/pictures/{{ product.front_pic }}" alt-src="../static/pictures/{{ product.back_pic}}" product_id="{{ product.id }}">
                     <p>{{ product.name }}</p>
-                    <select name="counts">
+                    <select id="add_item_selection_{{ product.id }}" name="counts">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
                     </select>
-                    <button type="submit">Add</button>                 
+                    <button class="add_item_button" product_id="{{ product.id }}">Add</button>                 
                 </div>
                 {% endfor %}
                 
