@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome, here is your order:</h1>
+    <table id="top_part">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Quantity</th>  
+                <th>Total</th>              
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in all_items %}
+            <tr>
+                <td>{{ order_item.item }}</td>
+                <td>{{ order_item.price }}</td>
+                <td><img class="pictures" src="../static/pictures/{{ product.front_pic }}"></td>
+                <td>{{ order_item.quantity }}</td>
+                <td>{{ order_item.sub_total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    <h1>Shipping Information</h1>
+    </table>
+    <p>Total Price</p>
+    <a href="/women">Continue Shopping</a>
+    <form action="/shipping" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" name="first_name"></td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td><input type="text" name="last_name"></td>
+            </tr>
+            <tr>
+                <td>Street</td>
+                <td><input type="text" name="street"></td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td><input type="text" name="city"></td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td><input type="text" name="state"></td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td><input type="text" name="city"></td>
+            </tr>
+            <tr>
+                <td>Zipcode</td>
+                <td><input type="text" name="zipcode"></td>
+            </tr>
+        </table>
+    </form>
+    <h1>Billing Information</h1>
+    <form action="/billing" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" name="first_name"></td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td><input type="text" name="last_name"></td>
+            </tr>
+            <tr>
+                <td>Street</td>
+                <td><input type="text" name="street"></td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td><input type="text" name="city"></td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td><input type="text" name="state"></td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td><input type="text" name="city"></td>
+            </tr>
+            <tr>
+                <td>Zipcode</td>
+                <td><input type="text" name="zipcode"></td>
+            </tr>
+            <tr>
+                <td>Card</td>
+                <td><input type="text" name="card"></td>
+            </tr>
+            <tr>
+                <td>Security Code</td>
+                <td><input type="text" name="security"></td>
+            </tr>
+            <tr>
+                <td>Expiration</td>
+                <td><input type="text" name="expiration"></td>
+            </tr>
+
+        </table>
+    </form>
+
+
+
+    
+</body>
+</html>
