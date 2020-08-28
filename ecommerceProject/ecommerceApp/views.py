@@ -17,10 +17,20 @@ def index(request):
 
 
 def men(request):
-    
+    context = {
+        'all_products': Item.objects.all().filter(category="men"),
+    }
+
+    if 'user_id' in request.session:
+        context['user'] = User.objects.get(id=request.session['user_id'])
+
+    if 'cart' in request.session:
+        context['cart_item_count'] = sum(request.session['cart'].values())
+    else:
+        context['cart_item_count'] = 0
 
 
-    return render(request, 'men.html')
+    return render(request, 'men.html', context)
 
 def women(request):
     context = {
