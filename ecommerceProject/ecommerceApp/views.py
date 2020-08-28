@@ -17,6 +17,9 @@ def index(request):
 
 
 def men(request):
+    
+
+
     return render(request, 'men.html')
 
 def women(request):

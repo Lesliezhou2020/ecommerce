@@ -23,8 +23,19 @@
             <a href='/carts'>Shopping Cart</a>(<span id='cart_item_count'>{{cart_item_count}}</span>)
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('img').hover(function() {
+                var temp = $(this).attr('data-alt-src')
+                $(this).attr('data-alt-src', $(this).attr('src'))
+                $(this).attr('src', temp)
+            })
+        });
+    </script>
     <div id="main">
-        <h2>Women Section</h2>
+        <h2>For Women</h2>
+        
         <div id="container">
             <div id="navigation">
                 <ul>
@@ -37,7 +48,7 @@
             <section >
                 {% for product in all_products %}
                 <div class='items'>
-                    <img class="display_img" src="../static/pictures/{{ product.front_pic }}" alt-src="../static/pictures/{{ product.back_pic}}" product_id="{{ product.id }}">
+                    <img class="display_img" src="../static/pictures/{{ product.front_pic }}" data-alt-src="../static/pictures/{{ product.back_pic}}" product_id="{{ product.id }}">
                     <p>{{ product.name }}</p>
                     <select id="add_item_selection_{{ product.id }}" name="counts">
                         <option value="1">1</option>

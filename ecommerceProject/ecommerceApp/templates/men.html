@@ -5,13 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <title>Men</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/women.css' %}">
+    <title>Women</title>
+    <script src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
     <div id="header">
         <h1></h1>
         <div id="user_panel">
-            <a href="/login">Login/Registration</a>
+            {% if "user_id" in request.session %}
+                <span>Hello <b>{{ user.first_name }}!</b></span>
+                <a href='/logout'>Logout</a> |
+            {% else %}
+                <a href="/register">Login/Registration</a> |
+            {% endif %}
+
+            <a href='/carts'>Shopping Cart</a>(<span id='cart_item_count'>{{cart_item_count}}</span>)
+        </div>
+    </div>
+    <div id="main">
+        <h2>For Men</h2>
+        <div id="container">
+            <div id="navigation">
+                <ul>
+                    <li><a href="#">All</a></li>
+                    <li><a href="#">Jackets</a></li>
+                    <li><a href="#">Shoes</a></li>
+                    <li><a href="#">Bags</a></li>
+                </ul>
+            </div>
+            <section >
+                {% for product in all_products %}
+                <div class='items'>
+                    <img class="display_img" src="../static/pictures/{{ product.front_pic }}" alt-src="../static/pictures/{{ product.back_pic}}" product_id="{{ product.id }}">
+                    <p>{{ product.name }}</p>
+                    <select id="add_item_selection_{{ product.id }}" name="counts">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <button class="add_item_button" product_id="{{ product.id }}">Add</button>                 
+                </div>
+                {% endfor %}
+                
+            </section>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
         </div>
     </div>
 </body>
