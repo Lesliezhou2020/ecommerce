@@ -93,14 +93,33 @@ def carts(request):
     if 'user_id' not in request.session:
         return redirect('/')
 
+    user = User.objects.get(id=request.session["user_id"])
     context = {
-        'user': User.objects.get(id=request.session["user_id"])
+        'user': user,
     }
 
     if 'cart' in request.session:
-        context['cart_item_count'] = sum(request.session['cart'].values())
-    else:
-        context['cart_item_count'] = 0
+        all_items = []
+        total_count = 0
+        total_price = 0
+
+        for prod_id, quantity in request.session['cart'].items():
+            total_count += quantity
+            item = Item.objects.get(id=prod_id)
+            all_items.append({
+                'name': item.name,
+                'price': item.price,
+                'quantity': quantity,
+                'sub_total': item.price * quantity,
+            })
+            total_price += item.price * quantity
+        
+        context = {
+            'user': user,
+            'cart_item_count': total_count,
+            'all_items' : all_items,
+            'total_price': total_price,
+        }
 
     return render(request, 'carts.html', context)
 
@@ -170,3 +189,6 @@ def add_item(request, product_id, amount):
     {
         'items_in_cart': sum(request.session['cart'].values()),
     })
+
+def placeorder(request):
+    return render(request, 'confirm.html')
