@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from django.contrib import messages
+from decimal import Decimal
 from ecommerceApp.models import *
 
 def index(request):
@@ -82,6 +83,7 @@ def admin_dash(request):
 
     context = {
         'all_products': Item.objects.all(),
+        'pending_orders': Order.objects.filter(status="pending"),
     }
 
     return render(request, 'admin_dash.html', context)
@@ -204,4 +206,60 @@ def add_item(request, product_id, amount):
     })
 
 def placeorder(request):
-    return render(request, 'confirm.html')
+    if request.method == 'POST':
+        user = User.objects.get(id=request.session['user_id'])
+
+        if 'cart' not in request.session or not request.session['cart']:
+            return redirect('/carts')
+
+        billing = Billing.objects.create(
+            first_name = request.POST['billing_first_name'],
+            last_name = request.POST['billing_last_name'],
+            street = request.POST['billing_street'],
+            city = request.POST['billing_city'],
+            state = request.POST['billing_state'],
+            zipcode = request.POST['billing_zipcode'],
+            cc_number = request.POST['card'],
+            cc_expiry = request.POST['expiration'],
+            cc_code = request.POST['security'],
+            user = user
+        )
+
+        shipping = Shipping.objects.create(
+            first_name = request.POST['first_name'],
+            last_name = request.POST['last_name'],
+            street = request.POST['street'],
+            city = request.POST['city'],
+            state = request.POST['state'],
+            zipcode = request.POST['zipcode'],
+            user = user
+        )
+
+        order = Order.objects.create(
+            total_price = Decimal(0.00),
+            status = "pending",
+            user = user,
+            shipping = shipping,
+            billing = billing,
+        )
+
+        for prod_id, quantity in request.session['cart'].items():
+            item = Item.objects.get(id=prod_id)
+            order_item = Order_item.objects.create(
+                quantity = quantity,
+                sub_total = item.price * quantity,
+                order = order,
+                item = item
+            )
+            order.total_price += order_item.sub_total
+        
+        order.save()
+        request.session['cart'] = {}
+
+        context = {
+            'order': order
+        }
+
+        return render(request, 'confirm.html', context)
+    
+    return redirect('/')

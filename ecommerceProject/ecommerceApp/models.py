@@ -57,7 +57,8 @@ class Shipping(models.Model):
     state = models.TextField()
     zipcode = models.TextField()
     user = models.ForeignKey(User, related_name="shipping_info", on_delete = models.CASCADE)
-    
+
+
 class Billing(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -71,8 +72,6 @@ class Billing(models.Model):
     user = models.ForeignKey(User, related_name="billing_info", on_delete = models.CASCADE)
 
 
-
-
 class Order(models.Model):
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
     status = models.CharField(max_length=255)
@@ -81,6 +80,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     shipping = models.ForeignKey(Shipping, related_name="orders", null = True, on_delete = models.SET_NULL)
     billing = models.ForeignKey(Billing, related_name="orders", null = True, on_delete = models.SET_NULL)
+
 
 class Item(models.Model):
     category = models.CharField(max_length=255)
@@ -92,6 +92,7 @@ class Item(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Order_item(models.Model):
     quantity = models.IntegerField()
     sub_total = models.DecimalField(max_digits=8, decimal_places=2)
@@ -99,7 +100,6 @@ class Order_item(models.Model):
     item = models.ForeignKey(Item, related_name="order_items", on_delete = models.CASCADE )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
 
 class AdminManager(models.Manager):

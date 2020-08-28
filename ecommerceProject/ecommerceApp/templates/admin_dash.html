@@ -71,6 +71,16 @@
                     <th>Order Status</th>
                     <th>Options</th>
                 </tr>
+                {% for order in pending_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user.first_name }}</td>
+                    <td>{{ order.created_at }}</td>
+                    <td>{{ order.total_price }}</td>
+                    <td>{{ order.status }}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
 
             </table>
             <h2>Order History</h2>
